@@ -1,7 +1,8 @@
 package com.synngate.expertcourselemonade
 
-import androidx.annotation.DrawableRes
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.synngate.expertcourselemonade.game.GamePage
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -20,7 +21,10 @@ class ScenarioTest {
 
     @Before
     fun setup() {
-        gamePage = GamePage(pictureRes = R.drawable.lemon)
+        gamePage = GamePage(
+            pictureResId = R.drawable.lemon,
+            textResId = R.string.lemon
+        )
     }
 
     @Test
@@ -33,7 +37,7 @@ class ScenarioTest {
         gamePage.clickPicture()
         gamePage.assertDrinkState()
 
-        gamePage.clickPicture()
+        gamePage.clickPictureSeveralTimes()
         gamePage.assertEmptyState()
 
         gamePage.clickPicture()
