@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val viewModel = GameViewModel(repository = GameRepository.Base(tapsToSqueeze = 3))
+        val viewModel = GameViewModel(repository = GameRepository.Base())
 
         binding.gameImageButton.setOnClickListener {
             val uiState: GameUiState = viewModel.next()
