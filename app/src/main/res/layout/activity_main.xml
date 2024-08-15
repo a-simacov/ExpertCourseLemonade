@@ -33,6 +33,7 @@
         android:layout_gravity="center"
         android:textSize="18sp"
         android:text="@string/lemon"
+        android:id="@+id/instructionTextView"
         tools:text="@string/lemon"/>
 
     <Space

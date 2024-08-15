@@ -21,14 +21,14 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val viewModel: GameViewModel = GameViewModel()
+        val viewModel = GameViewModel(repository = GameRepository.Base(tapsToSqueeze = 3))
 
         binding.gameImageButton.setOnClickListener {
             val uiState: GameUiState = viewModel.next()
             uiState.update(binding = binding)
         }
 
-        val uiState: GameUiState = viewModel.init()
+        val uiState: GameUiState = viewModel.next()
         uiState.update(binding = binding)
     }
 }

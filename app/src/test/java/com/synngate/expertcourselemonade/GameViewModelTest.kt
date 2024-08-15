@@ -1,41 +1,32 @@
 package com.synngate.expertcourselemonade
 
-import androidx.annotation.DrawableRes
-import org.junit.Test
-
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Test
 
 class GameViewModelTest {
 
     private lateinit var viewModel: GameViewModel
-    private lateinit var squeezeNumber: Int
+    private var tapsToSqueeze: Int = 0
 
     @Before
     fun setup() {
-        val squeezeNumber = 3
-        viewModel = GameViewModel(repository = FakeRepository(squeezeNumber = squeezeNumber))
+        tapsToSqueeze = 3
+        viewModel = GameViewModel(repository = FakeRepository(squeezeTaps = tapsToSqueeze))
     }
 
     @Test
     fun case_1() {
-        var actual: GameUiState = viewModel.init()
-        var expected: GameUiState = GameUiState.Initial(
+        var actual: GameUiState = viewModel.next()
+        var expected: GameUiState = GameUiState.Base(
             pictureResId = R.drawable.lemon,
             textResId = R.string.lemon
         )
         assertEquals(expected, actual)
 
-        actual = viewModel.next()
-        expected = GameUiState.Squeeze(
-            pictureResId = R.drawable.squeeze,
-            textResId = R.string.squeeze
-        )
-        assertEquals(expected, actual)
-
-        repeat(squeezeNumber - 1) {
+        repeat(tapsToSqueeze) {
             actual = viewModel.next()
-            expected = GameUiState.Squeeze(
+            expected = GameUiState.Base(
                 pictureResId = R.drawable.squeeze,
                 textResId = R.string.squeeze
             )
@@ -43,14 +34,14 @@ class GameViewModelTest {
         }
 
         actual = viewModel.next()
-        expected = GameUiState.Drink(
+        expected = GameUiState.Base(
             pictureResId = R.drawable.drink,
             textResId = R.string.drink
         )
         assertEquals(expected, actual)
 
         actual = viewModel.next()
-        expected = GameUiState.Empty(
+        expected = GameUiState.Base(
             pictureResId = R.drawable.empty,
             textResId = R.string.empty
         )
