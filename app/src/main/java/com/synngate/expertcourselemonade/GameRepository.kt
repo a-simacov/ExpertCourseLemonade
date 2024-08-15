@@ -4,7 +4,7 @@ interface GameRepository {
 
     fun next(): Choice
 
-    class Base(private val tapsToSqueeze: Int) : GameRepository {
+    class Base(private val tapsToSqueezeStrategy: TapsToSqueezeStrategy = TapsToSqueezeStrategy.Fixed()) : GameRepository {
 
         private val list = listOf(
             Choice(pictureResId = R.drawable.lemon, textResId = R.string.lemon),
@@ -13,6 +13,7 @@ interface GameRepository {
             Choice(pictureResId = R.drawable.empty, textResId = R.string.empty),
         )
 
+        private val tapsToSqueeze = tapsToSqueezeStrategy.tapsNumber()
         private var index = -1
         private val squeezeIndex = 1
         private var squeezeTapped = 0
@@ -39,3 +40,18 @@ interface GameRepository {
 }
 
 data class Choice(val pictureResId: Int, val textResId: Int)
+
+interface TapsToSqueezeStrategy {
+
+    fun tapsNumber(): Int
+
+    class Base : TapsToSqueezeStrategy {
+
+        override fun tapsNumber() = (2..4).random()
+    }
+
+    class Fixed : TapsToSqueezeStrategy {
+
+        override fun tapsNumber() = 3
+    }
+}

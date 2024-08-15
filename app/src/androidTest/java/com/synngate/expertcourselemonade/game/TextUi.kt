@@ -14,7 +14,6 @@ import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.Matcher
 
 class TextUi(
-    textResId: Int,
     containerIdMatcher: Matcher<View>,
     containerClassTypeMatcher: Matcher<View>
 ) {
@@ -24,7 +23,6 @@ class TextUi(
             containerIdMatcher,
             containerClassTypeMatcher,
             withId(R.id.instructionTextView),
-            withText(textResId),
             isAssignableFrom(TextView::class.java)
         )
     )
