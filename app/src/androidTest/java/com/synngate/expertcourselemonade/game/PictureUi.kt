@@ -15,7 +15,6 @@ import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.Matcher
 
 class PictureUi(
-    @DrawableRes pictureResId: Int,
     containerIdMatcher: Matcher<View>,
     containerClassTypeMatcher: Matcher<View>
 ) {
@@ -25,7 +24,6 @@ class PictureUi(
             containerIdMatcher,
             containerClassTypeMatcher,
             withId(R.id.gameImageButton),
-            DrawableResMatcher(pictureResId),
             isAssignableFrom(ImageButton::class.java),
         )
     )

@@ -2,22 +2,20 @@ package com.synngate.expertcourselemonade.game
 
 import android.view.View
 import android.widget.LinearLayout
-import androidx.annotation.DrawableRes
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
 import com.synngate.expertcourselemonade.R
 import org.hamcrest.Matcher
 
-class GamePage(@DrawableRes pictureResId: Int, textResId: Int) {
+class GamePage() {
 
     private val containerIdMatcher: Matcher<View> = withParent(withId(R.id.rootLayout))
     private val classTypeMatcher: Matcher<View> =
         withParent(isAssignableFrom(LinearLayout::class.java))
 
-    private val pictureUi =
-        PictureUi(pictureResId = pictureResId, containerIdMatcher, classTypeMatcher)
-    private val textUi = TextUi(textResId = textResId, containerIdMatcher, classTypeMatcher)
+    private val pictureUi = PictureUi(containerIdMatcher, classTypeMatcher)
+    private val textUi = TextUi(containerIdMatcher, classTypeMatcher)
     private val clickNumber = 3
 
     fun assertLemonState() {

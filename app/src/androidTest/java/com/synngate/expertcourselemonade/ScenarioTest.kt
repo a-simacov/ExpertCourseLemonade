@@ -3,7 +3,6 @@ package com.synngate.expertcourselemonade
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.synngate.expertcourselemonade.game.GamePage
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -16,29 +15,28 @@ class ScenarioTest {
     val activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
 
     private lateinit var gamePage: GamePage
+    private val timesToRepeat = 3
 
     @Before
     fun setup() {
-        gamePage = GamePage(
-            pictureResId = R.drawable.lemon,
-            textResId = R.string.lemon
-        )
+        gamePage = GamePage()
     }
 
     @Test
     fun caseNumber1() {
-        gamePage.assertLemonState()
+        repeat(timesToRepeat) {
+            gamePage.assertLemonState()
 
-        gamePage.clickPicture()
-        gamePage.assertSqueezeState()
+            gamePage.clickPictureSeveralTimes()
+            gamePage.assertSqueezeState()
 
-        gamePage.clickPicture()
-        gamePage.assertDrinkState()
+            gamePage.clickPicture()
+            gamePage.assertDrinkState()
 
-        gamePage.clickPictureSeveralTimes()
-        gamePage.assertEmptyState()
+            gamePage.clickPicture()
+            gamePage.assertEmptyState()
 
-        gamePage.clickPicture()
-        gamePage.assertLemonState()
+            gamePage.clickPicture()
+        }
     }
 }
