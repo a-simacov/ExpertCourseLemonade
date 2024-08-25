@@ -4,7 +4,19 @@ interface GameRepository {
 
     fun next(): Choice
 
-    class Base(private val tapsToSqueezeStrategy: TapsToSqueezeStrategy = TapsToSqueezeStrategy.Fixed()) : GameRepository {
+    fun current(): Choice
+
+    class Base(
+        private var index: IntCache,
+        private var tapsToSqueeze: IntCache,
+        private var squeezeTapped: IntCache,
+        private val tapsToSqueezeStrategy: TapsToSqueezeStrategy = TapsToSqueezeStrategy.Fixed()
+    ) : GameRepository {
+
+        init {
+            if (tapsToSqueeze.read() == 0)
+                tapsToSqueeze.save(tapsToSqueezeStrategy.tapsNumber())
+        }
 
         private val list = listOf(
             Choice(pictureResId = R.drawable.lemon, textResId = R.string.lemon),
@@ -13,28 +25,28 @@ interface GameRepository {
             Choice(pictureResId = R.drawable.empty, textResId = R.string.empty),
         )
 
-        private val tapsToSqueeze = tapsToSqueezeStrategy.tapsNumber()
-        private var index = -1
-        private val squeezeIndex = 1
-        private var squeezeTapped = 0
+        private val squeezeIndex = 1 // todo get index from list item where pictureResId = squeeze
+
+        override fun current(): Choice {
+            return list[index.read()]
+        }
 
         override fun next(): Choice {
-            when (index) {
-                squeezeIndex -> {
-                    squeezeTapped++
-                    if (squeezeTapped == tapsToSqueeze) {
-                        index++
-                        squeezeTapped = 0
-                    }
+            if (index.read() == squeezeIndex) {
+                squeezeTapped.save(squeezeTapped.read() + 1)
+                if (squeezeTapped.read() == tapsToSqueeze.read()) {
+                    index.save(index.read() + 1)
+                    squeezeTapped.save(0)
                 }
+            } else
+                index.save(index.read() + 1)
 
-                else -> index++
+            if (list.size == index.read()) {
+                index.save(0)
+                tapsToSqueeze.save(tapsToSqueezeStrategy.tapsNumber())
             }
 
-            if (list.size == index)
-                index = 0
-
-            return list[index]
+            return list[index.read()]
         }
     }
 }

@@ -25,18 +25,24 @@ class ScenarioTest {
     @Test
     fun caseNumber1() {
         repeat(timesToRepeat) {
-            gamePage.assertLemonState()
+            assertWithRecreate { gamePage.assertLemonState() }
 
             gamePage.clickPictureSeveralTimes()
-            gamePage.assertSqueezeState()
+            assertWithRecreate { gamePage.assertSqueezeState() }
 
             gamePage.clickPicture()
-            gamePage.assertDrinkState()
+            assertWithRecreate { gamePage.assertDrinkState() }
 
             gamePage.clickPicture()
-            gamePage.assertEmptyState()
+            assertWithRecreate { gamePage.assertEmptyState() }
 
             gamePage.clickPicture()
         }
+    }
+
+    private fun assertWithRecreate(assertion: () -> Unit) {
+        activityScenarioRule.scenario.recreate()
+        assertion.invoke()
+        activityScenarioRule.scenario.recreate()
     }
 }

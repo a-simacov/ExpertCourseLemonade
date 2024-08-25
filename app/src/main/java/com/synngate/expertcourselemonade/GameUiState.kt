@@ -1,17 +1,21 @@
 package com.synngate.expertcourselemonade
 
-import com.synngate.expertcourselemonade.databinding.ActivityMainBinding
+import com.synngate.expertcourselemonade.views.imagebutton.PictureButtonUiState
+import com.synngate.expertcourselemonade.views.imagebutton.UpdatePictureButton
+import com.synngate.expertcourselemonade.views.text.UpdateInstructionText
 
 interface GameUiState {
 
-    fun update(binding: ActivityMainBinding)
+    fun update(
+        textView: UpdateInstructionText,
+        imageButton: UpdatePictureButton
+    )
 
     data class Base(val pictureResId: Int, val textResId: Int) : GameUiState {
 
-        override fun update(binding: ActivityMainBinding) {
-            binding.instructionTextView.setText(textResId)
-            binding.gameImageButton.setImageResource(pictureResId)
-            binding.gameImageButton.tag = pictureResId
+        override fun update(textView: UpdateInstructionText, imageButton: UpdatePictureButton) {
+            textView.update(textResId = textResId)
+            imageButton.updateUi(uiState = PictureButtonUiState.Base(pictureResId = pictureResId))
         }
     }
 }

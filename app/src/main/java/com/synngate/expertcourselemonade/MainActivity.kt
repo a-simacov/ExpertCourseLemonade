@@ -8,6 +8,10 @@ import androidx.core.view.WindowInsetsCompat
 import com.synngate.expertcourselemonade.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var uiState: GameUiState
+    private lateinit var viewModel: GameViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -21,14 +25,21 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val viewModel = GameViewModel(repository = GameRepository.Base())
+        viewModel = (application.applicationContext as LemonApp).viewModel
 
-        binding.gameImageButton.setOnClickListener {
-            val uiState: GameUiState = viewModel.next()
-            uiState.update(binding = binding)
+        val updateUiState: () -> Unit = {
+            uiState.update(
+                textView = binding.instructionTextView,
+                imageButton = binding.gameImageButton
+            )
         }
 
-        val uiState: GameUiState = viewModel.next()
-        uiState.update(binding = binding)
+        binding.gameImageButton.setOnClickListener {
+            uiState = viewModel.next()
+            updateUiState.invoke()
+        }
+
+        uiState = viewModel.current()
+        updateUiState.invoke()
     }
 }
