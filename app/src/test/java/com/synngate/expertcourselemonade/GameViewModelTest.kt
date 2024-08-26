@@ -79,4 +79,8 @@ class FakeRepository(private var squeezeTaps: Int) : GameRepository {
 
         return list[index]
     }
+
+    override fun current(): Choice {
+        return list[index]
+    }
 }
