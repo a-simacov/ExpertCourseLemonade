@@ -11,11 +11,11 @@ interface GameUiState {
     )
 
     data class Base(val pictureResId: Int, val textResId: Int) : GameUiState {
+
         override fun update(textView: UpdateInstructionText, imageButton: UpdatePictureButton) {
             textView.update(textResId = textResId)
             imageButton.updateUi(uiState = PictureButtonUiState.Base(pictureResId = pictureResId))
         }
-
     }
 
     object Empty : GameUiState {

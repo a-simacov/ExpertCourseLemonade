@@ -51,12 +51,7 @@ class GameViewModelTest {
 
 class FakeRepository(private var squeezeTaps: Int) : GameRepository {
 
-    private val list = listOf(
-        Choice(pictureResId = R.drawable.lemon, textResId = R.string.lemon),
-        Choice(pictureResId = R.drawable.squeeze, textResId = R.string.squeeze),
-        Choice(pictureResId = R.drawable.drink, textResId = R.string.drink),
-        Choice(pictureResId = R.drawable.empty, textResId = R.string.empty),
-    )
+    private val list = listOf(Lemon, Squeeze, Drink, Empty)
 
     private var index = -1
     private val squeezeIndex = 1

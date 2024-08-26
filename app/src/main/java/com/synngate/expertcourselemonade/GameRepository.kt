@@ -18,14 +18,9 @@ interface GameRepository {
                 tapsToSqueeze.save(tapsToSqueezeStrategy.tapsNumber())
         }
 
-        private val list = listOf(
-            Choice(pictureResId = R.drawable.lemon, textResId = R.string.lemon),
-            Choice(pictureResId = R.drawable.squeeze, textResId = R.string.squeeze),
-            Choice(pictureResId = R.drawable.drink, textResId = R.string.drink),
-            Choice(pictureResId = R.drawable.empty, textResId = R.string.empty),
-        )
+        private val list = listOf(Lemon, Squeeze, Drink, Empty)
 
-        private val squeezeIndex = 1 // todo get index from list item where pictureResId = squeeze
+        private val squeezeIndex = list.indexOf(Squeeze)
 
         override fun current(): Choice {
             return list[index.read()]
@@ -51,7 +46,12 @@ interface GameRepository {
     }
 }
 
-data class Choice(val pictureResId: Int, val textResId: Int)
+abstract class Choice(val pictureResId: Int, val textResId: Int)
+
+object Lemon : Choice(pictureResId = R.drawable.lemon, textResId = R.string.lemon)
+object Squeeze : Choice(pictureResId = R.drawable.squeeze, textResId = R.string.squeeze)
+object Drink : Choice(pictureResId = R.drawable.drink, textResId = R.string.drink)
+object Empty : Choice(pictureResId = R.drawable.empty, textResId = R.string.empty)
 
 interface TapsToSqueezeStrategy {
 
