@@ -1,6 +1,7 @@
 package com.synngate.expertcourselemonade.views.imagebutton
 
 import android.content.Context
+import android.os.Parcelable
 import android.util.AttributeSet
 
 class PictureButton : androidx.appcompat.widget.AppCompatImageButton, UpdatePictureButton {
@@ -23,5 +24,19 @@ class PictureButton : androidx.appcompat.widget.AppCompatImageButton, UpdatePict
     override fun update(pictureResId: Int) {
         this.setImageResource(pictureResId)
         this.tag = pictureResId
+    }
+
+    override fun onSaveInstanceState(): Parcelable? {
+        return super.onSaveInstanceState()?.let {
+            val savedUiState = PictureButtonSavedState(it)
+            savedUiState.save(uiState)
+            return savedUiState
+        }
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        val restoredUiState = state as PictureButtonSavedState
+        super.onRestoreInstanceState(restoredUiState.superState)
+        updateUi(uiState = restoredUiState.restore())
     }
 }

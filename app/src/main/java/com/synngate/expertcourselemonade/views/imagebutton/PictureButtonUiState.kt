@@ -1,6 +1,8 @@
 package com.synngate.expertcourselemonade.views.imagebutton
 
-interface PictureButtonUiState {
+import java.io.Serializable
+
+interface PictureButtonUiState : Serializable {
 
     fun update(button: UpdatePictureButton)
 

@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
             updateUiState.invoke()
         }
 
-        uiState = viewModel.current()
+        uiState = viewModel.current(firstRun = (savedInstanceState == null))
         updateUiState.invoke()
     }
 }
