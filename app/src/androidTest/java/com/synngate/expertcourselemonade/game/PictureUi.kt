@@ -15,14 +15,12 @@ import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.Matcher
 
 class PictureUi(
-    containerIdMatcher: Matcher<View>,
-    containerClassTypeMatcher: Matcher<View>
+    parentMatcher: Matcher<View>
 ) {
 
     private val interaction: ViewInteraction = onView(
         allOf(
-            containerIdMatcher,
-            containerClassTypeMatcher,
+            parentMatcher,
             withId(R.id.gameImageButton),
             isAssignableFrom(ImageButton::class.java),
         )

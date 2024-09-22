@@ -6,16 +6,21 @@ import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
 import com.synngate.expertcourselemonade.R
+import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.Matcher
 
 class GamePage() {
 
-    private val containerIdMatcher: Matcher<View> = withParent(withId(R.id.rootLayout))
-    private val classTypeMatcher: Matcher<View> =
+    private val parentMatcher = allOf(
+        withParent(withId(R.id.rootLayout)),
         withParent(isAssignableFrom(LinearLayout::class.java))
+    )
 
-    private val pictureUi = PictureUi(containerIdMatcher, classTypeMatcher)
-    private val textUi = TextUi(containerIdMatcher, classTypeMatcher)
+    private val pictureUi = PictureUi(parentMatcher = parentMatcher)
+    private val textUi = TextUi(
+        id = R.id.instructionTextView,
+        parentMatcher = parentMatcher
+    )
     private val clickNumber = 3
 
     fun assertLemonState() {
@@ -46,5 +51,9 @@ class GamePage() {
         repeat(clickNumber) {
             clickPicture()
         }
+    }
+
+    fun assertDoesNotExist() {
+        textUi.assertDoesNotExist()
     }
 }

@@ -3,6 +3,7 @@ package com.synngate.expertcourselemonade
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.synngate.expertcourselemonade.game.GamePage
+import com.synngate.expertcourselemonade.load.LoadPage
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -28,6 +29,7 @@ class ScenarioTest {
         assertWithRecreate { loadPage.assertProgressState() }
 
         loadPage.waitTillGone()
+        loadPage.assertDoesNotExist()
 
         val gamePage = GamePage()
 
@@ -43,6 +45,8 @@ class ScenarioTest {
         assertWithRecreate { gamePage.assertEmptyState() }
 
         gamePage.clickPicture()
+        gamePage.assertDoesNotExist()
+
         assertWithRecreate { loadPage.assertInitState() }
     }
 
