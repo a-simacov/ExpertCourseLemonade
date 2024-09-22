@@ -3,7 +3,6 @@ package com.synngate.expertcourselemonade
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.synngate.expertcourselemonade.game.GamePage
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -14,30 +13,37 @@ class ScenarioTest {
     @get:Rule
     val activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
 
-    private lateinit var gamePage: GamePage
-    private val timesToRepeat = 3
-
-    @Before
-    fun setup() {
-        gamePage = GamePage()
-    }
-
     @Test
     fun caseNumber1() {
-        repeat(timesToRepeat) {
-            assertWithRecreate { gamePage.assertLemonState() }
+        val loadPage = LoadPage()
+        assertWithRecreate { loadPage.assertInitState() }
 
-            gamePage.clickPictureSeveralTimes()
-            assertWithRecreate { gamePage.assertSqueezeState() }
+        loadPage.clickNewGame()
+        assertWithRecreate { loadPage.assertProgressState() }
 
-            gamePage.clickPicture()
-            assertWithRecreate { gamePage.assertDrinkState() }
+        loadPage.waitTillError()
+        assertWithRecreate { loadPage.assertErrorState() }
 
-            gamePage.clickPicture()
-            assertWithRecreate { gamePage.assertEmptyState() }
+        loadPage.clickRetry()
+        assertWithRecreate { loadPage.assertProgressState() }
 
-            gamePage.clickPicture()
-        }
+        loadPage.waitTillGone()
+
+        val gamePage = GamePage()
+
+        assertWithRecreate { gamePage.assertLemonState() }
+
+        gamePage.clickPicture()
+        assertWithRecreate { gamePage.assertSqueezeState() }
+
+        gamePage.clickPictureSeveralTimes()
+        assertWithRecreate { gamePage.assertDrinkState() }
+
+        gamePage.clickPicture()
+        assertWithRecreate { gamePage.assertEmptyState() }
+
+        gamePage.clickPicture()
+        assertWithRecreate { loadPage.assertInitState() }
     }
 
     private fun assertWithRecreate(assertion: () -> Unit) {
