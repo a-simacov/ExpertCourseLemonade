@@ -5,41 +5,26 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.synngate.expertcourselemonade.databinding.ActivityMainBinding
+import com.synngate.expertcourselemonade.main.Navigation
+import com.synngate.expertcourselemonade.main.Screen
 
-class MainActivity : AppCompatActivity() {
-
-    private lateinit var uiState: GameUiState
-    private lateinit var viewModel: GameViewModel
+class MainActivity : AppCompatActivity(), Navigation {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        val binding: ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { v, insets ->
+        setContentView(R.layout.activity_main)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.container)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        viewModel = (application.applicationContext as LemonApp).viewModel
+        if (savedInstanceState == null)
+            navigateToGame()
+    }
 
-        val updateUiState: () -> Unit = {
-            uiState.update(
-                textView = binding.instructionTextView,
-                imageButton = binding.gameImageButton
-            )
-        }
-
-        binding.gameImageButton.setOnClickListener {
-            uiState = viewModel.next()
-            updateUiState.invoke()
-        }
-
-        uiState = viewModel.current(firstRun = (savedInstanceState == null))
-        updateUiState.invoke()
+    override fun navigate(screen: Screen) {
+        screen.show(R.id.container, supportFragmentManager)
     }
 }
