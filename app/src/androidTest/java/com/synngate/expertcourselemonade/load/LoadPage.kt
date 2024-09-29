@@ -16,13 +16,7 @@ class LoadPage {
     )
 
     private val titleUi = TextUi(
-        id = R.id.newGameTitle,
-        parentMatcher = parentMatcher
-    )
-
-    private val newGameUi = ButtonUi(
-        id = R.id.newGameButton,
-        textResId = R.string.new_game,
+        id = R.id.loadingTitle,
         parentMatcher = parentMatcher
     )
 
@@ -44,35 +38,22 @@ class LoadPage {
         parentMatcher = parentMatcher
     )
 
-    fun assertInitState() {
-        newGameUi.assertIsVisible()
-        imagesTextUi.assertIsVisible()
-
-        retryUi.assertIsNotVisible()
-        errorUi.assertIsNotVisible()
-        progressUi.assertIsNotVisible()
-    }
-
     fun assertProgressState() {
+        titleUi.assertIsVisible()
         progressUi.assertIsVisible()
         imagesTextUi.assertIsVisible()
 
-        newGameUi.assertIsNotVisible()
         retryUi.assertIsNotVisible()
         errorUi.assertIsNotVisible()
     }
 
     fun assertErrorState() {
+        titleUi.assertIsVisible()
         retryUi.assertIsVisible()
         errorUi.assertIsVisible()
 
         progressUi.assertIsNotVisible()
         imagesTextUi.assertIsNotVisible()
-        newGameUi.assertIsNotVisible()
-    }
-
-    fun clickNewGame() {
-        newGameUi.click()
     }
 
     fun clickRetry() {

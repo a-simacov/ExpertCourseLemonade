@@ -4,6 +4,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.synngate.expertcourselemonade.game.GamePage
 import com.synngate.expertcourselemonade.load.LoadPage
+import com.synngate.expertcourselemonade.start.StartPage
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -16,10 +17,13 @@ class ScenarioTest {
 
     @Test
     fun caseNumber1() {
-        val loadPage = LoadPage()
-        assertWithRecreate { loadPage.assertInitState() }
+        val startPage = StartPage()
+        assertWithRecreate { startPage.assertInitState() }
 
-        loadPage.clickNewGame()
+        startPage.clickNewGame()
+        startPage.assertDoesNotExist()
+
+        val loadPage = LoadPage()
         assertWithRecreate { loadPage.assertProgressState() }
 
         loadPage.waitTillError()
@@ -32,7 +36,6 @@ class ScenarioTest {
         loadPage.assertDoesNotExist()
 
         val gamePage = GamePage()
-
         assertWithRecreate { gamePage.assertLemonState() }
 
         gamePage.clickPicture()
@@ -47,7 +50,7 @@ class ScenarioTest {
         gamePage.clickPicture()
         gamePage.assertDoesNotExist()
 
-        assertWithRecreate { loadPage.assertInitState() }
+        assertWithRecreate { startPage.assertInitState() }
     }
 
     private fun assertWithRecreate(assertion: () -> Unit) {
