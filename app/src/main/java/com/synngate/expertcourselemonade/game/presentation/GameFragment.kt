@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.synngate.expertcourselemonade.main.LemonApp
 import com.synngate.expertcourselemonade.databinding.FragmentGameBinding
+import com.synngate.expertcourselemonade.di.ProvideViewModel
 
 class GameFragment : Fragment() {
 
@@ -29,7 +29,7 @@ class GameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = (requireActivity().application.applicationContext as LemonApp).viewModel
+        viewModel = (requireActivity() as ProvideViewModel).makeViewModel(GameViewModel::class.java)
 
         val updateUiState: () -> Unit = {
             uiState.update(

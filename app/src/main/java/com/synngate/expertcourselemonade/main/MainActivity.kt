@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.synngate.expertcourselemonade.R
+import com.synngate.expertcourselemonade.di.MyViewModel
+import com.synngate.expertcourselemonade.di.ProvideViewModel
 
-class MainActivity : AppCompatActivity(), Navigation {
+class MainActivity : AppCompatActivity(), ProvideViewModel, Navigation {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +24,9 @@ class MainActivity : AppCompatActivity(), Navigation {
         if (savedInstanceState == null)
             navigateToGame()
     }
+
+    override fun <T : MyViewModel> makeViewModel(clasz: Class<T>): T =
+        (application as ProvideViewModel).makeViewModel(clasz)
 
     override fun navigate(screen: Screen) {
         screen.show(R.id.container, supportFragmentManager)

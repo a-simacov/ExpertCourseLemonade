@@ -1,26 +1,27 @@
 package com.synngate.expertcourselemonade.main
 
 import android.app.Application
-import android.content.Context
-import com.synngate.expertcourselemonade.game.data.GameRepository
-import com.synngate.expertcourselemonade.game.presentation.GameViewModel
+import com.synngate.expertcourselemonade.di.ClearViewModel
+import com.synngate.expertcourselemonade.di.ManageViewModels
+import com.synngate.expertcourselemonade.di.MyViewModel
+import com.synngate.expertcourselemonade.di.ProvideViewModel
+import ru.easycode.expertcoursequizgame.Core
 
-class LemonApp : Application() {
+class LemonApp : Application(), ProvideViewModel {
 
-    lateinit var viewModel: GameViewModel
+    private lateinit var factory: ManageViewModels
 
     override fun onCreate() {
         super.onCreate()
 
-        val sharedPreferences =
-            applicationContext.getSharedPreferences("LemonGameData", Context.MODE_PRIVATE)
-
-        viewModel = GameViewModel(
-            repository = GameRepository.Base(
-                index = IntCache.Base(sharedPreferences, "indexKey", 0),
-                tapsToSqueeze = IntCache.Base(sharedPreferences, "tapsToSqueezeKey", 0),
-                squeezeTapped = IntCache.Base(sharedPreferences, "squeezeTappedKey", 0),
-            )
-        )
+        val clearViewModel = object : ClearViewModel {
+            override fun clear(viewModelClass: Class<out MyViewModel>) =
+                factory.clear(viewModelClass)
+        }
+        val make = ProvideViewModel.Make(Core(this, clearViewModel))
+        factory = ManageViewModels.Factory(make)
     }
+
+    override fun <T : MyViewModel> makeViewModel(clasz: Class<T>): T =
+        factory.makeViewModel(clasz)
 }
