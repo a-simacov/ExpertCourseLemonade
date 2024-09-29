@@ -1,4 +1,4 @@
-package com.synngate.expertcourselemonade
+package com.synngate.expertcourselemonade.game.presentation
 
 import com.synngate.expertcourselemonade.views.imagebutton.PictureButtonUiState
 import com.synngate.expertcourselemonade.views.imagebutton.UpdatePictureButton

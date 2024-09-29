@@ -1,4 +1,6 @@
-package com.synngate.expertcourselemonade
+package com.synngate.expertcourselemonade.game.presentation
+
+import com.synngate.expertcourselemonade.game.data.GameRepository
 
 class GameViewModel(private val repository: GameRepository) {
 

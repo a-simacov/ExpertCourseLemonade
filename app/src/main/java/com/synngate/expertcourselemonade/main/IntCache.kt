@@ -1,4 +1,4 @@
-package com.synngate.expertcourselemonade
+package com.synngate.expertcourselemonade.main
 
 import android.content.SharedPreferences
 

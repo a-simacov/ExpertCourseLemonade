@@ -1,5 +1,13 @@
 package com.synngate.expertcourselemonade
 
+import com.synngate.expertcourselemonade.game.data.Choice
+import com.synngate.expertcourselemonade.game.data.Drink
+import com.synngate.expertcourselemonade.game.data.Empty
+import com.synngate.expertcourselemonade.game.data.GameRepository
+import com.synngate.expertcourselemonade.game.data.Lemon
+import com.synngate.expertcourselemonade.game.data.Squeeze
+import com.synngate.expertcourselemonade.game.presentation.GameUiState
+import com.synngate.expertcourselemonade.game.presentation.GameViewModel
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test

@@ -1,7 +1,9 @@
-package com.synngate.expertcourselemonade
+package com.synngate.expertcourselemonade.main
 
 import android.app.Application
 import android.content.Context
+import com.synngate.expertcourselemonade.game.data.GameRepository
+import com.synngate.expertcourselemonade.game.presentation.GameViewModel
 
 class LemonApp : Application() {
 

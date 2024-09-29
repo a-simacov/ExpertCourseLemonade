@@ -1,4 +1,7 @@
-package com.synngate.expertcourselemonade
+package com.synngate.expertcourselemonade.game.data
+
+import com.synngate.expertcourselemonade.R
+import com.synngate.expertcourselemonade.main.IntCache
 
 interface GameRepository {
 

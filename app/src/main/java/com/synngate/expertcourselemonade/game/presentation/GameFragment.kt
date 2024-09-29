@@ -5,9 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.synngate.expertcourselemonade.GameUiState
-import com.synngate.expertcourselemonade.GameViewModel
-import com.synngate.expertcourselemonade.LemonApp
+import com.synngate.expertcourselemonade.main.LemonApp
 import com.synngate.expertcourselemonade.databinding.FragmentGameBinding
 
 class GameFragment : Fragment() {
